@@ -1,0 +1,12 @@
+.fit-cover {
+  object-fit: cover;
+}
+
+div {
+}
+
+@media (min-width: 992px) {
+  html {
+  }
+}
+

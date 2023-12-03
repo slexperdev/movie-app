@@ -1,0 +1,233 @@
+<div class="row">
+
+  <div class="col-lg-3">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title mb-3">Add New Cruise Reservations</h4>
+        <form>
+          <div class="form-group">
+            <label class="col-form-label" for="recipient-name-3">Title:</label>
+            <input class="form-control" [(ngModel)]="newCruisePackage.title" name="title" type="text" />
+        </div>
+        <div class="form-group">
+            <label class="col-form-label" for="recipient-name-3">Departure Destination:</label>
+            <input class="form-control" [(ngModel)]="newCruisePackage.departure_destination" name="departure_destination" type="text" />
+        </div>
+        <div class="form-group">
+            <label class="col-form-label" for="recipient-name-3">Departure Date:</label>
+            <input class="form-control" [(ngModel)]="newCruisePackage.departure_date"  name="departure_date" type="date" />
+        </div>
+        <div class="form-group">
+          <label class="col-form-label" for="recipient-name-3">Arrival Destination:</label>
+          <input class="form-control" [(ngModel)]="newCruisePackage.arrival_destination" name="arrival_destination" type="text" />
+      </div>
+        <div class="form-group">
+            <label class="col-form-label" for="recipient-name-3">Arrival Date:</label>
+            <input class="form-control" [(ngModel)]="newCruisePackage.arrival_date" name="arrival_date" type="date" />
+        </div>
+        <div class="form-group">
+          <label class="col-form-label" for="recipient-name-3">Description:</label>
+          <textarea class="form-control" [(ngModel)]="newCruisePackage.description" name="cruise_duration"> </textarea>
+      </div>
+        <div class="form-group">
+            <label class="col-form-label" for="recipient-name-3">Cruise Duration:</label>
+            <input class="form-control" [(ngModel)]="newCruisePackage.cruise_duration" name="cruise_duration" type="number" />
+        </div>
+        <div class="form-group">
+            <label class="col-form-label" for="recipient-name-3">Cruise Provider:</label>
+            <input class="form-control" [(ngModel)]="newCruisePackage.cruise_provider" name="cruise_provider" type="text" />
+        </div>
+        <!-- <div class="form-group">
+          <label class="col-form-label" for="recipient-name-3">Cruise Provdsdider:</label>
+          <input class="form-control" [(ngModel)]="newCruisePackage.cabin_class" name="cabin_class" type="text" />
+      </div> -->
+        <div class="form-group">
+          <label for="picker1">Cabin Class</label>
+          <select class="form-control" [(ngModel)]="newCruisePackage.cabin_class" name="cabin_class">
+            <option [value]="'1st Class'">1st Class</option>
+            <option [value]="'2nd Class'">2nd Class</option>
+            <option [value]="'3rd Class'">3rd Class</option>
+          </select>
+      </div>
+        <div class="form-group">
+            <label class="col-form-label" for="recipient-name-3">Price:</label>
+            <input class="form-control" [(ngModel)]="newCruisePackage.price" name="price" type="text" />
+        </div>
+        <div class="form-group" style="text-align: right;">
+          <button class="btn btn-success" (click)="addNewCruisePackage()">Add</button>
+          <button class="btn btn-warning" (click)="resetAddNewCruisePackageForm()" style="margin-left: 5px;">Reset</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-9">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card text-left">
+          <div class="card-body">
+              <h4 class="card-title mb-3">Cruise Reservations</h4>
+              <div>
+                  <table datatable class="row-border hover"  *ngIf="allCruisePackages.length">
+                      <thead>
+                          <tr>
+                            <th scope="col">Title</th>
+                            <th scope="col">Departure Destination</th>
+                            <th scope="col">Arrival Destination</th>
+                            <th scope="col">Departure Date</th>
+                            <th scope="col">Arrival Date</th>
+                            <th scope="col">Cabin Class</th>
+                            <th scope="col">Cruise Duration</th>
+                            <th scope="col">Cruise Provider</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Actions</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let package of allCruisePackages">
+                          <td>{{ package.title }}</td>
+                          <td>{{ package.departure_destination }}</td>
+                          <td>{{ package.arrival_destination }}</td>
+                          <td>{{ package.departure_date | date: 'yyyy-MM-dd' }}</td>
+                          <td>{{ package.arrival_date | date: 'yyyy-MM-dd' }}</td>
+                          <td>{{ package.cabin_class }}</td>
+                          <td>{{ package.cruise_duration }}</td>
+                          <td>{{ package.cruise_provider }}</td>
+                          <td>{{ package.price | currency }}</td>
+                          <td><span class="badge badge-success">Active</span></td>
+                          <td>
+                          <button class="btn btn-warning btn-sm m-1" type="button" data-toggle="modal" (click)="viewCruisePackage(package.id || '')" data-target="#cruiseReservationUpdate">
+                              <i class="nav-icon i-Pen-2 font-weight-bold"></i>
+                          </button>
+                          <button   class="btn btn-danger btn-sm m-1" type="button" data-toggle="modal" (click)="deleteCruisePackage(package.id || '')" data-target="#verifyModalContent1">
+                            <i class="nav-icon i-Close-Window font-weight-bold"></i>
+                          </button>
+                              <a class="text-danger mr-2" href="#"></a>
+                          </td>
+                      </tr>
+                  
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+      </div>
+      <div class="col-lg-12 mt-3">
+        <div class="card text-left">
+            <div class="card-body">
+                <h4 class="card-title mb-3">Cruise Bookings</h4>
+                <div class="table-responsive">
+                  <table datatable class="row-border hover" *ngIf="cruiseBookingList.length">
+                    <thead>
+                      <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Cabin</th>
+                        <th scope="col">Meal Preference</th>
+
+                      </tr>
+                    </thead>
+                    <tbody *ngFor="let booking of cruiseBookingList">
+                      <tr>
+                        <th scope="row">{{booking?.user?.first_name}} {{booking?.user?.last_name}}</th>
+                        <td>{{booking?.user?.email}}</td>
+                        <td>{{booking?.product?.title}}</td>
+                        <td>{{booking?.product?.price}}</td>
+                        <td>{{booking?.cabin}}</td>
+                        <td>{{booking?.meal_preference}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+  </div>
+</div>
+
+<div class="row">
+
+
+  <div class="modal fade" id="cruiseReservationUpdate" tabindex="-1" role="dialog" aria-labelledby="verifyModalContent1"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="verifyModalContent1_title">Update cruise reservation</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">×</span></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label class="col-form-label" for="recipient-name-3">Title:</label>
+              <input class="form-control" [(ngModel)]="cruisePackage.title" name="title" type="text" />
+          </div>
+          <div class="form-group">
+              <label class="col-form-label" for="recipient-name-3">Departure Destination:</label>
+              <input class="form-control" [(ngModel)]="cruisePackage.departure_destination" name="departure_destination" type="text" />
+          </div>
+          <div class="form-group">
+              <label class="col-form-label" for="recipient-name-3">Departure Date:</label>
+              <input class="form-control" [ngModel]="formatDate(cruisePackage.departure_date)"  name="departure_date" type="date" />
+          </div>
+          <div class="form-group">
+              <label class="col-form-label" for="recipient-name-3">Arrival Date:</label>
+              <input class="form-control" [ngModel]="formatDate(cruisePackage.arrival_date)" name="arrival_date" type="date" />
+          </div>
+          <div class="form-group">
+            <label class="col-form-label" for="recipient-name-3">Description:</label>
+            <textarea class="form-control" [(ngModel)]="cruisePackage.description" name="description"> </textarea>
+        </div>
+          <div class="form-group">
+              <label class="col-form-label" for="recipient-name-3">Cruise Duration:</label>
+              <input class="form-control" [(ngModel)]="cruisePackage.cruise_duration" name="cruise_duration" type="number" />
+          </div>
+          <div class="form-group">
+              <label class="col-form-label" for="recipient-name-3">Cruise Provider:</label>
+              <input class="form-control" [(ngModel)]="cruisePackage.cruise_provider" name="cruise_provider" type="text" />
+          </div>
+          <div class="form-group">
+              <label class="col-form-label" for="recipient-name-3">Price:</label>
+              <input class="form-control" [(ngModel)]="cruisePackage.price" name="price" type="text" />
+          </div>
+          
+            <!-- <div class="form-group">
+              <label class="col-form-label" for="message-text-2">Cabin Class:</label>
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" id="dropdownMenuButton" type="button"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Select Cabin Class
+
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#">First Class</a>
+                  <a class="dropdown-item" href="#">Second Class</a>
+                  <a class="dropdown-item" href="#">Third Class</a>
+                </div>
+              </div>
+            </div> -->
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+          <button class="btn btn-warning" (click)="updateCruisePackage(cruisePackage.id || '')" type="button">Update Now</button>
+        </div>
+      </div>
+    </div>
+    <!-- end of col-->
+    <!-- travel-different-countries-->
+
+    <!-- latest-log-->
+  </div>
+
+
+  <div class="row"></div>
+  <!-- end of main-content -->
+</div>

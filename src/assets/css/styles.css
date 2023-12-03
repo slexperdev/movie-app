@@ -1,0 +1,26 @@
+@media (min-width: 992px) {
+  body {
+    background: #f5f5fa;
+  }
+}
+
+@media (min-width: 992px) {
+  section {
+  }
+}
+
+.text-white {
+  --bs-text-opacity: 1;
+  color: rgba(var(--bs-white-rgb),var(--bs-text-opacity))!important;
+}
+
+.my-3 {
+  margin-top: 1rem!important;
+  margin-bottom: 1rem!important;
+}
+
+@media (min-width: 992px) {
+  footer {
+  }
+}
+
